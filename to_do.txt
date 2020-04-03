@@ -1,0 +1,4 @@
+To Do:
+- remove pantry from cart -- maybe add pantry as recipe with negative value for ingredients. Then at the end discard any items in the cart with negative values
+- the grocery units table should turn into the master list of ingredients providing lookups for units, prices, categories, etc.
+- rename dry and wet to mass and volume
