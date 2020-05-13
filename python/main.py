@@ -57,17 +57,21 @@ def convertGenericNames(ingredients,generic_names):
             # the variable in the series at that index
 
 def convertUnits(ingredient,toUnit):
-    # check if mass or volume ingredient
-    fromMass = np.any(m2m_table.RowUnits == ingredient.Unit)
-    toMass = np.any(m2m_table.RowUnits == toUnit)
-    if fromMass and toMass:         # mass to mass
-        convTable = m2m_table
-    elif fromMass and not toMass:   # mass to volume
+    # check if ingredient name is in special table, and if the unit we desire
+    # matches the special table unit
+    m2v = np.any(m2v_table.Name == ingredient.Name)
+    v2m = np.any(v2m_table.Name == ingredient.Name)
+    if m2v:
         conv_table = m2v_table
-    elif not fromMass and toMass:   # volume to mass
+    elif v2m:
         conv_table = v2m_table
-    else:                           # volume to volume
-        conv_table = v2v_table
+    else:
+        # check if mass or volume ingredient
+        fromMass = np.any(m2m_table.RowUnits == ingredient.Unit)
+        if fromMass:                # mass to mass
+            conv_table = m2m_table
+        else:                       # volume to volume
+            conv_table = v2v_table
         
     return float(conv_table[conv_table.RowUnits == ingredient.Unit][toUnit])*ingredient.Amount
 
