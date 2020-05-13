@@ -3,3 +3,6 @@ salt
 pepper
 cinnamon
 water
+baking powder
+baking soda
+olive oil
