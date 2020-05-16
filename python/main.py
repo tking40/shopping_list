@@ -110,7 +110,8 @@ def loadAndFilterRecipe(recipe_name):
 #%% Loop through recipe list and add ingredients to cart
 shopping_cart = newCart(default_cart) # initialize Cart
 
-active_ix = np.argwhere(recipe_list.Select) # get active recipes
+active_ix = np.flatnonzero(recipe_list.Select) # get active recipes
+# ^ np.argwhere does not work with numpy 1.18.1. Using flatnonzero instead
 active_recipes = recipe_list.iloc[active_ix.flatten()]
 
 for index,recipe in active_recipes.iterrows():
