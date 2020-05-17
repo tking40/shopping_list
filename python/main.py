@@ -7,6 +7,10 @@ Created on Sun Apr 19 07:31:27 2020
 
 ''' Imports and Table Loads'''
 
+# Filter Warnings
+import warnings
+warnings.filterwarnings('ignore')
+
 import pandas as pd
 import numpy as np
 
@@ -38,6 +42,10 @@ class newCart:
             self.list.Recipe[idx] += ', ' + newIngredient.Recipe
         else:
             self.list = self.list.append(newIngredient)
+    
+    def returnIngredientAmount(self,ingredient_name):
+        this_ing = pd.DataFrame.squeeze(self.list[self.list.Name == ingredient_name])
+        print(this_ing.Amount,this_ing.Unit,'of',this_ing.Name)
 
 def convertGenericNames(ingredients,generic_names):
     ing_list = ingredients['Name']
@@ -61,19 +69,20 @@ def convertUnits(ingredient,toUnit):
     # matches the special table unit
     m2v = np.any(m2v_table.Name == ingredient.Name)
     v2m = np.any(v2m_table.Name == ingredient.Name)
-    if m2v:
-        conv_table = m2v_table
-    elif v2m:
-        conv_table = v2m_table
+    fromMass = np.any(m2m_table.RowUnits == ingredient.Unit)
+    if m2v and fromMass:
+        return float(m2v_table[m2v_table.Name == ingredient.Name][ingredient.Unit])*ingredient.Amount
+    elif v2m and not fromMass:
+        return float(v2m_table[v2m_table.Name == ingredient.Name][ingredient.Unit])*ingredient.Amount
     else:
         # check if mass or volume ingredient
-        fromMass = np.any(m2m_table.RowUnits == ingredient.Unit)
+        
         if fromMass:                # mass to mass
             conv_table = m2m_table
         else:                       # volume to volume
             conv_table = v2v_table
         
-    return float(conv_table[conv_table.RowUnits == ingredient.Unit][toUnit])*ingredient.Amount
+        return float(conv_table[conv_table.RowUnits == ingredient.Unit][toUnit])*ingredient.Amount
 
 def loadAndFilterRecipe(recipe_name):
     ''' Load'''
