@@ -14,8 +14,14 @@ warnings.filterwarnings("ignore")
 import pandas as pd
 import numpy as np
 
-table_path = "C:/Users/Thomas/Documents/MATLAB/shopping_list/python/tables/"
-recipe_path = "C:/Users/Thomas/Documents/MATLAB/shopping_list/python/recipes/"
+from sys import platform as _platform
+if _platform == "darwin":
+    root = "/Users/thomasj.king/Documents/Python_Scripts/shopping_list/"
+else:
+    root = "C:/Users/Thomas/Documents/MATLAB/shopping_list/"
+
+table_path = root + "python/tables/"
+recipe_path = root + "python/recipes/"
 
 stopfoods = pd.read_csv(table_path + "stop_foods.txt")
 pantry = pd.read_csv(table_path + "pantry.csv")
