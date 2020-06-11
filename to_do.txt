@@ -1,4 +1,7 @@
 To Do:
 - remove pantry from cart -- maybe add pantry as recipe with negative value for ingredients. Then at the end discard any items in the cart with negative values
 - the grocery units table should turn into the master list of ingredients providing lookups for units, prices, categories, etc.
-- rename dry and wet to mass and volume
+- fix caramelized shallot pasta recipe (couldn't access NYT at the time)
+- could see having a function that rounds up units appropriately (gallons to .5, fl oz to 1)
+- add attribute to recipes that indicates serving size. Use this to scale ingredients adding to cart based on servings desired in recipe select list.  
+- add special conversion for lemons. If recipe has lemon juice, convert to 1 lemon per 2 tbsp juice
