@@ -96,19 +96,11 @@ def convertUnits(ingredient,toUnit):
     # matches the special table unit
     m2v = np.any(m2v_table.Name == ingredient.Name)
     v2m = np.any(v2m_table.Name == ingredient.Name)
-    fromMass = np.any(m2m_table.FromUnits == ingredient.Unit)
+    fromMass = np.any(m2m_table.RowUnits == ingredient.Unit)
     if m2v and fromMass:
-        if (m2v_table[m2v_table.Name == ingredient.Name].ToUnit == toUnit).bool():
-            print("Converting",ingredient.Name,"from",ingredient.Unit,"to",toUnit)
-            return float(m2v_table[m2v_table.Name == ingredient.Name][ingredient.Unit])*ingredient.Amount
-        else:
-            raise ValueError("unknown conversion special unit")
+        return float(m2v_table[m2v_table.Name == ingredient.Name][ingredient.Unit])*ingredient.Amount
     elif v2m and not fromMass:
-        if (v2m_table[v2m_table.Name == ingredient.Name].ToUnit == toUnit).bool():
-            print("Converting",ingredient.Name,"from",ingredient.Unit,"to",toUnit)
-            return float(v2m_table[v2m_table.Name == ingredient.Name][ingredient.Unit])*ingredient.Amount
-        else:
-            raise ValueError("unknown special unit conversion")
+        return float(v2m_table[v2m_table.Name == ingredient.Name][ingredient.Unit])*ingredient.Amount
     else:
         # check if mass or volume ingredient
         
@@ -117,7 +109,7 @@ def convertUnits(ingredient,toUnit):
         else:                       # volume to volume
             conv_table = v2v_table
         
-        return float(conv_table[conv_table.FromUnits == ingredient.Unit][toUnit])*ingredient.Amount
+        return float(conv_table[conv_table.RowUnits == ingredient.Unit][toUnit])*ingredient.Amount
 
 def loadAndFilterRecipe(recipe_name):
     ''' Load'''
@@ -159,7 +151,7 @@ active_ix = np.flatnonzero(recipe_list.Select) # get active recipes
 active_recipes = recipe_list.iloc[active_ix.flatten()]
 
 for index,recipe in active_recipes.iterrows():
-    print("--- Adding " + recipe.Name + "... ---")
+    print("Adding " + recipe.Name + "...")
     ingredients = loadAndFilterRecipe(recipe.Name)
     for index,ingredient in ingredients.iterrows():
         # do comparison with existing list, then add to cart appropriately
