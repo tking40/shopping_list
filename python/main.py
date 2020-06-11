@@ -96,13 +96,6 @@ def convertUnits(ingredient,toUnit):
     # matches the special table unit
     m2v = np.any(m2v_table.Name == ingredient.Name)
     v2m = np.any(v2m_table.Name == ingredient.Name)
-<<<<<<< Updated upstream
-    fromMass = np.any(m2m_table.RowUnits == ingredient.Unit)
-    if m2v and fromMass:
-        return float(m2v_table[m2v_table.Name == ingredient.Name][ingredient.Unit])*ingredient.Amount
-    elif v2m and not fromMass:
-        return float(v2m_table[v2m_table.Name == ingredient.Name][ingredient.Unit])*ingredient.Amount
-=======
     fromMass = np.any(m2m_table.FromUnits == ingredient.Unit) #compare ingredient unit to mass units
     if m2v and fromMass:
         if (m2v_table[m2v_table.Name == ingredient.Name].ToUnit == toUnit).bool():
@@ -122,7 +115,6 @@ def convertUnits(ingredient,toUnit):
             # but the toUnit in the table doesn't match the toUnit passed in to
             # this function
             raise ValueError("unknown special unit conversion")
->>>>>>> Stashed changes
     else:
         # check if mass or volume ingredient
         if fromMass:                # mass to mass
@@ -130,13 +122,9 @@ def convertUnits(ingredient,toUnit):
         else:                       # volume to volume
             conv_table = v2v_table
         
-<<<<<<< Updated upstream
-        return float(conv_table[conv_table.RowUnits == ingredient.Unit][toUnit])*ingredient.Amount
-=======
         return float(conv_table[conv_table.FromUnits == ingredient.Unit][toUnit])*ingredient.Amount
         # if the toUnit is a special unit that we haven't listed for this ingredient yet,
         # then the above line will return a key error
->>>>>>> Stashed changes
 
 def loadAndFilterRecipe(recipe_name):
     ''' Load'''
