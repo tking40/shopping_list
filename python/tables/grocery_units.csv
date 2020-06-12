@@ -1,16 +1,24 @@
-Name,Unit
-ap flour,pounds
-unsalted butter,sticks
-lemon juice,fluid_oz
-2% milk,gallons
-greek yogurt,ounces
-maple syrup,fluid_oz
-bread flour,pounds
-vanilla,fluid_oz
-whole milk,gallons
-mushrooms,ounces
-linguine,pounds
-spaghetti,pounds
-elbow pasta,pounds
-parmesan cheese,ounces
-sugar,pounds
+Name,Unit,Category
+ap flour,pounds,spices
+unsalted butter,sticks,dairy
+lemon juice,fluid_oz,produce
+2% milk,gallons,dairy
+greek yogurt,ounces,dairy
+maple syrup,fluid_oz,condiment
+bread flour,pounds,grains
+vanilla,fluid_oz,spices
+whole milk,gallons,dairy
+mushrooms,ounces,produce
+linguine,pounds,pasta
+spaghetti,pounds,pasta
+elbow pasta,pounds,pasta
+parmesan cheese,ounces,dairy
+sugar,pounds,spices
+sour cream,ounces,dairy
+eggs,units,dairy
+buttermilk,cups,dairy
+garlic,units,produce
+shredded colby-monterey jack cheese,tbd,dairy
+yellow onion,units,produce
+frozen spinach,tbd,frozen
+pie crust,units,dairy
