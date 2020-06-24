@@ -42,7 +42,8 @@ url_list = pd.read_csv(table_path + "url_list.csv")
 stopfoods = pd.read_csv(table_path + "stop_foods.txt")
 generic_names = pd.read_csv(table_path + "generic_names.csv")
 grocery_units = pd.read_csv(table_path + "grocery_units.csv")
-name_tables = [stopfoods,generic_names,grocery_units]
+possibleUnits = ["cup","cups","lbs","pounds","tsp","teaspoons","teaspoon","tbsp","tablespoons","tablespoon"]
+name_tables = [stopfoods,generic_names,grocery_units,possibleUnits]
 
 default_cart = pd.read_pickle(table_path + "shopping_cart.pickle")
 
@@ -68,58 +69,23 @@ active_recipes = recipe_list.iloc[active_ix]
 
 for index,recipe in active_recipes.iterrows():
     print("Adding " + recipe.Name + "...") if verbose else ...
-    ingredients = utils.loadAndFilterRecipe(recipe.Name,recipe_path,name_tables,
+    ingredients = utils.loadAndFilterRecipe(recipe,recipe_path,name_tables,
                                             conv_tables,verbose,dbug)
     for index,ingredient in ingredients.iterrows():
         # do comparison with existing list, then add to cart appropriately
         shopping_cart.addToCart(ingredient)
 
 #%% Add new recipes from URLs
-
-
-#%% Print out list
-shopping_cart.sortAndPrint()
-
-#%% Soup It!
-
-URL = 'https://www.food.com/recipe/shrimp-and-grits-518698'
-URL = 'https://www.food.com/recipe/slow-cooker-chicken-pozole-345614'
-URL = 'https://www.food.com/recipe/quick-and-easy-pizza-dough-117532'
-URL = 'https://www.budgetbytes.com/slow-cooker-chicken-tikka-masala/'
-"""
-page = requests.get(URL)
-
-soup = BeautifulSoup(page.content, 'html.parser')
-# results = soup.find(id='__layout')
-
-recipe_directions = soup.find("div", {"class": "recipe-layout__directions"})
-recipe_ingredients = soup.find("div", {"class": "recipe-layout__ingredients"})
-
-
-ingredients = [x.get_text().strip()
-               for x in recipe_ingredients.find_all('li')]
-directions = [x.get_text().strip()
-               for x in recipe_directions.find_all('li')]
-"""
-possibleUnits = ["cup","cups","lbs","pounds","tsp","teaspoons","teaspoon","tbsp","tablespoons","tablespoon"]
 for index,recipe in url_list.iterrows():
     print("Adding " + recipe.Name + "...") if verbose else ...
-    ingList,dirList = utils.loadURL(recipe.Address)
-    ingredients = utils.parseIngredients(ingList,possibleUnits)
-    
+    ingredients = utils.loadAndFilterRecipe(recipe,recipe_path,name_tables,
+                                            conv_tables,verbose,dbug)
     for index,ingredient in ingredients.iterrows():
         # do comparison with existing list, then add to cart appropriately
         shopping_cart.addToCart(ingredient)
 
-# ix = 0
-# for y in ingredients:
-#     ix+=1
-#     print(ix,y)
+#%% Print out list
+shopping_cart.sortAndPrint()
 
-# print("Ingredients")
-# ingDF = utils.parseIngredients(ingredients,possibleUnits)
-# print(ingDF)
-# print('')
-
-print("Directions")
-for i,j in enumerate(dirList): print(i+1,j)
+# print("Directions")
+# for i,j in enumerate(dirList): print(i+1,j)

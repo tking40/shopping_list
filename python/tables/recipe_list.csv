@@ -6,7 +6,7 @@ Select,Name
 0,Boef Bourguignon
 0,Chili Mac n Cheese Soup
 0,Salmon and Spinach Mashed Potatoes
-0,InstaPot Taco Pasta
+1,InstaPot Taco Pasta
 0,InstaPot Pulled Pork
 0,InstaPot Red Beans and Rice
 0,Red Beans and Rice
@@ -40,7 +40,7 @@ Select,Name
 0,extras
 0,test1
 0,test2
-1,InstaPot Butter Chicken
-1,Tuna Casserole
-1,Buttermilk Biscuits
-1,Mac n Cheese
+0,InstaPot Butter Chicken
+0,Tuna Casserole
+0,Buttermilk Biscuits
+0,Mac n Cheese

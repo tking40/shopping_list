@@ -112,15 +112,22 @@ def convertUnits(ingredient,toUnit,conv_tables,verbose):
     # then the above line will return a key error
 
 
-def loadAndFilterRecipe(recipe_name,recipe_path,name_tables,conv_tables,verbose,dbug):
+def loadAndFilterRecipe(recipe,recipe_path,name_tables,conv_tables,verbose,dbug):
     ''' Extract Tables'''
-    stopfoods,generic_names,grocery_units = name_tables
+    stopfoods,generic_names,grocery_units,possibleUnits = name_tables
     v2v_table,m2m_table,v2m_table,m2v_table = conv_tables
+    
+    isURL = "Address" in recipe # boolean check on recipe type
+    
     ''' Load'''
-    fpath = recipe_path + recipe_name + ".csv"
-    ingredients = pd.read_csv(fpath, dtype={'Amount':'float64'})
-    # ^ pd.read_csv will auto-select datatypes unless specified - here a recipe
-    # might be converted to all int64, which would truncate future arithmetic
+    if isURL:
+        ingList,dirList = loadURL(recipe.Address)
+        ingredients = parseIngredients(ingList,possibleUnits)
+    else:
+        fpath = recipe_path + recipe.Name + ".csv"
+        ingredients = pd.read_csv(fpath, dtype={'Amount':'float64'})
+        # ^ pd.read_csv will auto-select datatypes unless specified - here a recipe
+        # might be converted to all int64, which would truncate future arithmetic
 
     ''' Filter '''
     # add category column
@@ -157,7 +164,7 @@ def loadAndFilterRecipe(recipe_name,recipe_path,name_tables,conv_tables,verbose,
             
     
     #Add recipe name
-    name_series = pd.Series(recipe_name).repeat(len(ingredients))
+    name_series = pd.Series(recipe.Name).repeat(len(ingredients))
     name_series.name = "Recipe"
     return pd.DataFrame.join(ingredients,name_series.reset_index(drop=True)) 
 
@@ -195,7 +202,7 @@ def parseIngredients(ingList,possibleUnits):
         else:
             unit = "units"
         newList.append([name,amount,unit])
-    return pd.DataFrame(newList,columns={"Name","Amount","Unit"})
+    return pd.DataFrame(newList,columns=["Name","Amount","Unit"])
 
 def loadURL(URL):
     page = requests.get(URL)
@@ -207,7 +214,13 @@ def loadURL(URL):
     elif "budgetbytes" in URL:
         recipe_ingredients = soup.find("div", {"class": "wprm-recipe-ingredient-group"})
         recipe_directions = soup.find("div", {"class": "wprm-recipe-instruction-group"})
-        
+    elif "bonappetit" in URL:
+        recipe_ingredients = soup.find("div", {"class": "ingredientsGroup"})
+        recipe_directions = soup.find("div", {"class": "steps-wrapper"})
+    elif "marthastewart" in URL:
+        recipe_ingredients = soup.find("div", {"class": "recipe-shopper-wrapper"})
+        recipe_directions = soup.find("fieldset", {"class": "instructions-section__fieldset"})
+    
     ingredients = [x.get_text().strip()
                for x in recipe_ingredients.find_all('li')]
     directions = [x.get_text().strip()
