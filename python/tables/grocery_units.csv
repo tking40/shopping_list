@@ -1,134 +1,142 @@
 Name,Unit,Category
-ap flour,pounds,spices
-unsalted butter,sticks,dairy
-lemon juice,fluid_oz,produce
 2% milk,gallons,dairy
-greek yogurt,ounces,dairy
-maple syrup,fluid_oz,condiment
-bread flour,pounds,grains
-vanilla,fluid_oz,spices
-whole milk,gallons,dairy
-mushrooms,ounces,produce
-linguine,pounds,pasta
-spaghetti,pounds,pasta
-elbow pasta,pounds,pasta
-parmesan cheese,ounces,dairy
-sugar,pounds,spices
-sour cream,ounces,dairy
-eggs,units,dairy
-buttermilk,cups,dairy
-garlic,units,produce
-shredded colby-monterey jack cheese,tbd,dairy
-yellow onions,units,produce
-frozen spinach,tbd,frozen
-pie crust,units,dairy
-roma tomatoes,units,produce
-green onions,units,produce
-red onions,units,produce
-jalapeno peppers,units,produce
-cilantro,units,produce
-lime juice,tbsp,produce
-extra firm tofu,ounces,produce
-ginger root,ounces,produce
-cornstarch,ounces,spices
-asparagus,ounces,produce
-chuck roast,pounds,meat
-carrots,units,produce
-bacon,pounds,meat
-white onions,units,produce
-beef stock,fluid_oz,canned goods
-burgandy,fluid_oz,alcohol
-thyme,ounces,produce
-pearl onions,pounds,produce
-tomato paste,ounces,canned goods
-ground beef,pounds,meat
-reduced-sodium chicken broth,fluid_oz,canned goods
-chicken stock,fluid_oz,canned goods
-parsley,units,produce
-condensed cheddar cheese soup,ounces,canned goods
-sharp cheddar cheese,ounces,dairy
-tomatoes,units,produce
-red potatoes,pounds,produce
-salmon,pounds,meat
-lemon zest,tbsp,produce
-spinach,ounces,produce
-bell peppers,units,produce
-vegetable broth,fluid_oz,canned goods
-salsa,ounces,canned goods
-frozen corn,ounces,frozen
-black beans,ounces,canned goods
-taco seasoning,tbsp,spices
-pork shoulder,pounds,meat
-chicken broth,fluid_oz,canned goods
-brown sugar,ounces,spices
-soy sauce,fluid_oz,spices
-sausage,pounds,meat
-celery,units,produce
-kidney beans,ounces,canned goods
-white rice,pounds,spices
+active dry yeast,units,spices
+anchovies,units,canned goods
 andouille sausage,pounds,meat
-okra,ounces,produce
-red beans,ounces,canned goods
+ap flour,pounds,spices
+asiago cheese,ounces,dairy
+asparagus,ounces,produce
+avocados,units,produce
+bacon,pounds,meat
+bananas,units,produce
+basil,units,spices
+beef stock,fluid_oz,canned goods
+bell peppers,units,produce
+bittersweet chocolate,ounces,spices
+black beans,ounces,canned goods
+boneless chicken thighs,pounds,meat
+bread flour,pounds,grains
+broccoli,ounces,produce
+brown sugar,ounces,spices
+brussel sprouts,pounds,produce
+burgandy,fluid_oz,alcohol
+buttermilk,cups,dairy
+capers,ounces,canned goods
+capers,ounces,canned goods
+carrots,units,produce
+celery,units,produce
+chicken breast,pounds,meat
+chicken broth,fluid_oz,canned goods
+chicken stock,fluid_oz,canned goods
+chives,ounces,produce
+chuck roast,pounds,meat
+cilantro,units,produce
+condensed cheddar cheese soup,ounces,canned goods
+condensed cream of mushroom soup,ounces,canned goods
+corn,ounces,produce
+cornmeal,ounces,grains
+cornstarch,ounces,spices
+cream cheese,ounces,dairy
+creamed corn,ounces,canned goods
+crushed tomatoes,ounces,canned goods
+diced tomatoes,ounces,canned goods
+dill,ounces,produce
 dry kidney beans,pounds,spices
 dry red beans,pounds,spices
-harissa paste,ounces,canned goods
-corn,ounces,produce
-avocados,units,produce
-sweet potatoes,pounds,produce
-panko,ounces,spices
+egg noodles,ounces,pasta
 eggplants,units,produce
-basil,units,spices
-ricotta cheese,ounces,dairy
-marinara sauce,ounces,canned goods
-mozarella cheese,ounces,dairy
+eggs,units,dairy
+elbow pasta,pounds,pasta
+extra firm tofu,ounces,produce
+feta cheese,ounces,dairy
+fire-roasted tomatoes,ounces,canned goods
+flour tortillas,units,grains
 fontina cheese,ounces,dairy
+frozen corn,ounces,frozen
+frozen peas,ounces,frozen
+frozen spinach,tbd,frozen
+garlic,units,produce
+gigli pasta,ounces,pasta
+ginger root,ounces,produce
+greek yogurt,ounces,dairy
 green beans,pounds,produce
-diced tomatoes,ounces,canned goods
-crushed tomatoes,ounces,canned goods
+green olives,ounces,canned goods
+green onions,units,produce
+ground beef,pounds,meat
+harissa paste,ounces,canned goods
+heavy whipping cream,fluid_oz,dairy
+heirloom tomatoes,ounces,produce
+honey,fluid_oz,spices
+jalapeno peppers,units,produce
+kale,ounces,produce
+kidney beans,ounces,canned goods
+lemon juice,fluid_oz,produce
+lemon zest,tbsp,produce
+lemons,units,produce
+lime juice,tbsp,produce
+linguine,pounds,pasta
 low-sodium chicken broth,ounces,canned goods
 low-sodium kidney beans,ounces,canned goods
-anchovies,units,canned goods
-capers,ounces,canned goods
-pitted kalamata olives,ounces,canned goods
-whole tomatoes,ounces,canned goods
-tuna,ounces,canned goods
-spaghetti noodles,ounces,pasta
-shallots,units,produce
-shrimp,pounds,meat
-lemons,units,produce
-heavy whipping cream,fluid_oz,dairy
-chives,ounces,produce
-dill,ounces,produce
-green olives,ounces,canned goods
-penne pasta,ounces,pasta
-broccoli,ounces,produce
-fire-roasted tomatoes,ounces,canned goods
-pesto,fluid_oz,canned goods
-gigli pasta,ounces,pasta
-squash,pounds,produce
-rigatoni noodles,ounces,pasta
-heirloom tomatoes,ounces,produce
-asiago cheese,ounces,dairy
-kale,ounces,produce
-pine nuts,ounces,spices
-mexican shredded cheese,,
-flour tortillas,units,grains
-refried beans,ounces,canned goods
-serrano peppers,units,produce
-feta cheese,ounces,dairy
-brussel sprouts,pounds,produce
+maple syrup,fluid_oz,condiment
+marinara sauce,ounces,canned goods
 mayonnaise,ounces,canned goods
-cornmeal,ounces,grains
-creamed corn,ounces,canned goods
-bananas,units,produce
+mexican shredded cheese,,
+mozarella cheese,ounces,dairy
+mushrooms,ounces,produce
+okra,ounces,produce
+panko,ounces,spices
+parmesan cheese,ounces,dairy
+parsley,units,produce
+pearl onions,pounds,produce
+peeled shrimp,pounds,meat
+penne pasta,ounces,pasta
+pesto,fluid_oz,canned goods
+pie crust,units,dairy
+pine nuts,ounces,spices
+pitted kalamata olives,ounces,canned goods
+pork shoulder,pounds,meat
+potato chips,units,snacks
+red beans,ounces,canned goods
+red onions,units,produce
+red potatoes,pounds,produce
+reduced-sodium chicken broth,fluid_oz,canned goods
+refried beans,ounces,canned goods
+ricotta cheese,ounces,dairy
+rigatoni noodles,ounces,pasta
 rolled oats,ounces,grains
+roma tomatoes,units,produce
+romaine lettuce,units,produce
+salmon,pounds,meat
+salsa,ounces,canned goods
+sausage,pounds,meat
 semi-sweet chocolate chips,ounces,spices
-active dry yeast,units,spices
-honey,fluid_oz,spices
-bittersweet chocolate,ounces,spices
-cream cheese,ounces,dairy
-boneless chicken thighs,pounds,meat
-egg noodles,ounces,pasta
+serrano peppers,units,produce
+shallots,units,produce
+sharp cheddar cheese,ounces,dairy
 shredded cheddar cheese,ounces,dairy
-frozen peas,ounces,frozen
-condensed cream of mushroom soup,ounces,canned goods
+shredded colby-monterey jack cheese,tbd,dairy
+sour cream,ounces,dairy
+soy sauce,fluid_oz,spices
+spaghetti,pounds,pasta
+spaghetti noodles,ounces,pasta
+spinach,ounces,produce
+squash,pounds,produce
+sugar,pounds,spices
+sweet potatoes,pounds,produce
+taco seasoning,tbsp,spices
+thyme,ounces,produce
+tomato paste,ounces,canned goods
+tomatoes,units,produce
+tuna,ounces,canned goods
+unsalted butter,sticks,dairy
+vanilla,fluid_oz,spices
+vegetable broth,fluid_oz,canned goods
+white onions,units,produce
+white rice,pounds,spices
+whole milk,gallons,dairy
+whole tomatoes,ounces,canned goods
+yellow onions,units,produce
+yogurt,ounces,dairy
+iceberg lettuce,units,produce
+white cheddar cheese,ounces,produce
+old bay seasoning,tablespoons,spices

@@ -14,6 +14,8 @@ import numpy as np
 from fractions import Fraction
 import requests
 from bs4 import BeautifulSoup
+from textblob import TextBlob
+import inflection as inf
 
 class newCart:
     def __init__(self, newCart):
@@ -59,16 +61,19 @@ class newCart:
         print("Saving new default cart as",fname)
         pd.to_pickle(pd.DataFrame(columns = colList),fname)
 
+
+            
+
 def convertGenericNames(ingredients,generic_names,attr):
     ing_list = ingredients[attr]
     name_list = generic_names["Name"]
     gen_list = generic_names["Generic"]
-
+    
     # finding matching indices first prevents from having to loop through every
     # ingredient and check it against the generic list - O(n) vs O(n^2)
     idx = np.where(ing_list.isin(name_list))
-    if np.size(idx[0]):
-        for ix in idx[0]: # this also feels wrong
+    if np.size(idx[0]): # if not empty (we have any matches)
+        for ix in idx[0]:
             gen_ix = np.where(name_list.isin([ing_list.iloc[ix]]))
             ing_list.iloc[ix] = gen_list.iloc[gen_ix[0][0]]
             # ^ this is obviously hideous, must be better way to slice and assign.
@@ -88,7 +93,7 @@ def convertUnits(ingredient,toUnit,conv_tables,verbose):
         conv_table = m2m_table
     elif fromVol and toVol: # convert between volumes
         conv_table = v2v_table
-    elif fromVol and not toVol: # special convert from volume
+    elif fromVol and toMass: # special convert from volume
         if (v2m_table[v2m_table.Name == ingredient.Name].ToUnits == toUnit).bool():
             print("Converting",ingredient.Name,"from",ingredient.Unit,"to",toUnit) if verbose else ...
             return float(v2m_table[v2m_table.Name == ingredient.Name][ingredient.Unit])*ingredient.Amount
@@ -114,7 +119,7 @@ def convertUnits(ingredient,toUnit,conv_tables,verbose):
 
 def loadAndFilterRecipe(recipe,recipe_path,name_tables,conv_tables,verbose,dbug):
     ''' Extract Tables'''
-    stopfoods,generic_names,grocery_units,possibleUnits = name_tables
+    stopfoods,ingredients_lookup,units_lookup,grocery_units = name_tables
     v2v_table,m2m_table,v2m_table,m2v_table = conv_tables
     
     isURL = "Address" in recipe # boolean check on recipe type
@@ -122,7 +127,8 @@ def loadAndFilterRecipe(recipe,recipe_path,name_tables,conv_tables,verbose,dbug)
     ''' Load'''
     if isURL:
         ingList,dirList = loadURL(recipe.Address)
-        ingredients = parseIngredients(ingList,possibleUnits)
+        print(ingList) if dbug else ...
+        ingredients = parseIngredients(ingList,ingredients_lookup,units_lookup)
     else:
         fpath = recipe_path + recipe.Name + ".csv"
         ingredients = pd.read_csv(fpath, dtype={'Amount':'float64'})
@@ -130,16 +136,17 @@ def loadAndFilterRecipe(recipe,recipe_path,name_tables,conv_tables,verbose,dbug)
         # might be converted to all int64, which would truncate future arithmetic
 
     ''' Filter '''
+    
     # add category column
     ingredients["Category"] = np.nan
     # force lower case for comparisons later
     ingredients.Name = ingredients.Name.str.lower()
-    # remove stop foods
-    ingredients.drop(ingredients[ingredients.Name.isin(stopfoods.Name)].index)
     # convert generic names
-    convertGenericNames(ingredients,generic_names,"Name")
+    # convertGenericNames(ingredients,generic_names,"Name")
+    # remove stop foods
+    ingredients = ingredients.drop(ingredients[ingredients.Name.isin(stopfoods.Name)].index)
     # convert generic units
-    convertGenericNames(ingredients,generic_names,"Unit")
+    # convertGenericNames(ingredients,generic_names,"Unit")
     # convert to common units
     # ing_to_check = ingredients[ingredients.Name.isin(grocery_units.Name)]
     # for index,ing in ing_to_check.iterrows():
@@ -166,7 +173,7 @@ def loadAndFilterRecipe(recipe,recipe_path,name_tables,conv_tables,verbose,dbug)
     #Add recipe name
     name_series = pd.Series(recipe.Name).repeat(len(ingredients))
     name_series.name = "Recipe"
-    return pd.DataFrame.join(ingredients,name_series.reset_index(drop=True)) 
+    return pd.DataFrame.join(ingredients.reset_index(drop=True),name_series.reset_index(drop=True)) 
 
 def myIsNumber(x):
     # this is a goddamn mess and I don't care
@@ -180,27 +187,91 @@ def myIsNumber(x):
                 return float(Fraction(x.replace(chr(8260),"/")))
             except:
                 return False
-        
 
-
-def parseIngredients(ingList,possibleUnits):
-    newList = []
-    for ing in ingList:
-        ingSplit = ing.split()
-        amount = 0
-        for ix in range(len(ingSplit)):
-            x = myIsNumber(ingSplit[ix])
-            if x:
-                amount+=x
-            else:
-                name = ' '.join(ingSplit[ix:])
-                break
-        thisUnit = name.split()[0].lower()
-        if thisUnit in possibleUnits:
-            unit = thisUnit
-            name = ' '.join(name.split()[1:])
+def matchIngredient(ingName,genNames,dbug=True):
+    # get words from ingredient phrase
+    ingWords = TextBlob(ingName).words.lower()
+    # singularize using inflection (textblob is bad at this)
+    ingWords = [inf.singularize(word) for word in ingWords]
+    singGenNames = [inf.singularize(word) for word in genNames.Name]
+    # score each ingredient based on matching words with generic names
+    # here we're comparing whole words after we've singularized them
+    score = [len([None for ingWord in ingWords if ingWord in genName.split()]) for genName in singGenNames]
+    # get max score
+    maxval = max(score)
+    # if we have multiple maxima, we need to do some more calculations
+    # example: 'flour' matches 'flour' and 'flour tortilla' equally
+    if maxval == 0:
+        print(ingName,"has no matches") if dbug else ...
+        return ingName
+    elif score.count(maxval) > 1: 
+        # find indices of maxima
+        ix = [i for i,s in enumerate(score) if s == maxval]
+        # get character length of matching generic names
+        counts = [len(singGenNames[i]) for i in ix]
+        # if we have multiple matching names with equal length, then we need
+        # to refine our generic names list
+        matchingNames = [singGenNames[i] for i in ix]
+        print(ingName,"matches",matchingNames,"equally") if dbug else ...
+        if counts.count(min(counts)) > 1:
+            print("could not find best match") if dbug else ...
+            return ingName
+        # otherwise, assume that smallest matching name is the one we want
         else:
-            unit = "units"
+            matchedIng = genNames.Generic[ix[counts.index(min(counts))]]
+            print(ingName,"matches best to",matchedIng) if dbug else ...
+            return matchedIng
+    # if 1 maximum, we've found the matching ingredient
+    else:
+        matchedIng = genNames.Generic[score.index(maxval)]
+        print(ingName,"matches to",matchedIng) if dbug else ...
+        return matchedIng
+
+def matchUnit(ingName, genNames, dbug=True):
+    # get words from ingredient phrase
+    ingWords = TextBlob(ingName).words.lower()
+    # score each word in ingredient name with generic units
+    score = [len([None for ingWord in ingWords if ingWord in genName.split()]) for genName in genNames.Name]
+    # get max score
+    maxval = max(score)
+    # if multiple maxima, we can't be certain of intended unit
+    if maxval == 0:
+        print("no units found for",ingName) if dbug else ...
+        return "units"
+    elif score.count(maxval) > 1:
+         # find indices of maxima
+        ix = [i for i,s in enumerate(score) if s == maxval]
+        # get character length of matching generic names
+        counts = [len(genNames.Name[i]) for i in ix]
+        # if we have multiple matching names with equal length, then we need
+        # to refine our generic names list
+        matchingNames = [genNames.Name[i] for i in ix]
+        print(ingName,"matches",matchingNames,"equally") if dbug else ...
+        if counts.count(min(counts)) > 1:
+            print("could not find best match") if dbug else ...
+            return ingName
+        # otherwise, assume that smallest matching name is the one we want
+        else:
+            matchedIng = genNames.Generic[ix[counts.index(min(counts))]]
+            print(ingName,"matches best to",matchedIng) if dbug else ...
+            return matchedIng
+    else:
+        return genNames.Generic[score.index(maxval)]
+    
+
+def parseIngredients(ingList,ingredients_lookup,units_lookup,dbug=True):
+    newList = []
+    for ingName in ingList:
+        # generate textblob
+        blob = TextBlob(ingName)
+        # get name
+        name = matchIngredient(ingName,ingredients_lookup,dbug)
+        # get amount
+        numbers = [myIsNumber(word) for word in blob.words if myIsNumber(word)]
+        amount = np.sum(numbers)
+        # get units
+        unit = matchUnit(ingName,units_lookup,dbug)
+        
         newList.append([name,amount,unit])
     return pd.DataFrame(newList,columns=["Name","Amount","Unit"])
 
@@ -228,3 +299,9 @@ def loadURL(URL):
 
     return ingredients,directions
 
+#%% Test
+# root = "C:/Users/Thomas/Documents/MATLAB/shopping_list/"
+# ingName = "15 oz. tomato sauce ($0.50)"
+# table_path = root + "python/tables/"
+# units_lookup = pd.read_csv(table_path + "units_lookup.csv")
+# matchUnit(ingName,units_lookup)

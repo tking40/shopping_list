@@ -37,13 +37,15 @@ recipe_path = root + "python/recipes/"
 
 pantry = pd.read_csv(table_path + "pantry.csv")
 recipe_list = pd.read_csv(table_path + "recipe_list.csv")
-url_list = pd.read_csv(table_path + "url_list.csv")
+url_list = pd.read_csv(table_path + "url_list.txt")
 
 stopfoods = pd.read_csv(table_path + "stop_foods.txt")
+ingredients_lookup = pd.read_csv(table_path + "ingredients_lookup.csv")
+units_lookup = pd.read_csv(table_path + "units_lookup.csv")
 generic_names = pd.read_csv(table_path + "generic_names.csv")
 grocery_units = pd.read_csv(table_path + "grocery_units.csv")
-possibleUnits = ["cup","cups","lbs","pounds","tsp","teaspoons","teaspoon","tbsp","tablespoons","tablespoon"]
-name_tables = [stopfoods,generic_names,grocery_units,possibleUnits]
+
+name_tables = [stopfoods,ingredients_lookup,units_lookup,grocery_units]
 
 default_cart = pd.read_pickle(table_path + "shopping_cart.pickle")
 
@@ -54,7 +56,7 @@ m2v_table = pd.read_csv(table_path + "mass_to_volume.csv")
 conv_tables = [v2v_table,m2m_table,v2m_table,m2v_table]
 
 # Flags
-verbose = False
+verbose = True
 dbug = True
 
 
