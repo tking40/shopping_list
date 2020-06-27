@@ -42,7 +42,6 @@ url_list = pd.read_csv(table_path + "url_list.txt")
 stopfoods = pd.read_csv(table_path + "stop_foods.txt")
 ingredients_lookup = pd.read_csv(table_path + "ingredients_lookup.csv")
 units_lookup = pd.read_csv(table_path + "units_lookup.csv")
-generic_names = pd.read_csv(table_path + "generic_names.csv")
 grocery_units = pd.read_csv(table_path + "grocery_units.csv")
 
 name_tables = [stopfoods,ingredients_lookup,units_lookup,grocery_units]

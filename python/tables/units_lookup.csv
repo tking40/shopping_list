@@ -7,12 +7,12 @@ lb,pounds
 lbs,pounds
 pound,pounds
 pounds,pounds
-tsp,teaspoons
-tbsp,teaspoons
-tablespoon,tablespoons
-tablespoons,tablespoons
-teaspoon,teaspoons
-teaspoons,teaspoons
+tsp,tsp
+tbsp,tbsp
+tablespoon,tbsp
+tablespoons,tbsp
+teaspoon,tsp
+teaspoons,tsp
 fluid oz,fluid_oz
 fluid_oz,fluid_oz
 fl oz,fluid_oz
@@ -27,3 +27,4 @@ gallon,gallons
 gallons,gallons
 quart,quarts
 quarts,quarts
+cloves,units

@@ -1,3 +1,8 @@
 Address,Name
 https://www.bonappetit.com/recipe/green-goddess-salad, Green Salad
 https://www.food.com/recipe/shrimp-and-grits-518698, Shrimp n Grits
+https://www.marthastewart.com/1531120/pressure-cooker-corn-risotto, Corn Risotto
+https://www.budgetbytes.com/slow-cooker-chicken-tikka-masala/, Tikka Masala
+https://www.foodnetwork.com/recipes/food-network-kitchen/instant-pot-salmon-with-garlic-potatoes-and-greens-3894814, Salmon
+https://thesaltymarshmallow.com/instant-pot-pulled-pork/#wprm-recipe-container-4341, Pulled Pork
+https://www.camelliabrand.com/recipes/instant-pot-new-orleans-style-red-beans-and-rice/, Red Beans n Rice
