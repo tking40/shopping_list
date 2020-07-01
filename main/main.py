@@ -32,8 +32,8 @@ else: # Windows
     root = "C:/Users/Thomas/Documents/MATLAB/shopping_list/"
 
 # Table Loads
-table_path = root + "python/tables/"
-recipe_path = root + "python/recipes/"
+table_path = root + "main/tables/"
+recipe_path = root + "main/recipes/"
 
 pantry = pd.read_csv(table_path + "pantry.csv")
 recipe_list = pd.read_csv(table_path + "recipe_list.csv")
