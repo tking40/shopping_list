@@ -542,6 +542,11 @@ def loadURL(URL):
         raw_directions = soup.find("div", {"class": "e-instructions instructions"})
         ingTok = 'li'
         dirTok = 'li'
+    elif "nytimes" in URL:
+        raw_ingredients = soup.find("section", {"class": "recipe-intredients-wrap"})
+        raw_directions = soup.find("section", {"class": "recipe-steps-wrap"})
+        ingTok = 'li'
+        dirTok = 'li'
     
     ingredients = [x.get_text().strip()
                for x in raw_ingredients.find_all(ingTok)]
