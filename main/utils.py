@@ -543,7 +543,7 @@ def loadURL(URL):
         ingTok = 'li'
         dirTok = 'li'
     elif "nytimes" in URL:
-        raw_ingredients = soup.find("section", {"class": "recipe-intredients-wrap"})
+        raw_ingredients = soup.find("section", {"class": "recipe-ingredients-wrap"})
         raw_directions = soup.find("section", {"class": "recipe-steps-wrap"})
         ingTok = 'li'
         dirTok = 'li'
