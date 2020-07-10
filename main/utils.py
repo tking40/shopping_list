@@ -543,13 +543,14 @@ def loadURL(URL):
         ingTok = 'li'
         dirTok = 'li'
     elif "nytimes" in URL:
-        raw_ingredients = soup.find("section", {"class": "recipe-ingredients-wrap"})
+        raw_ingredients = soup.find("ul", {"class": "recipe-ingredients"})
         raw_directions = soup.find("section", {"class": "recipe-steps-wrap"})
         ingTok = 'li'
         dirTok = 'li'
     
-    ingredients = [x.get_text().strip()
-               for x in raw_ingredients.find_all(ingTok)]
+    ingredients = [x.get_text().strip() 
+                   # for x in raw_ingredients.find_all("span",{"class": "ingredient-name"})]
+                for x in raw_ingredients.find_all(ingTok)]
     directions = [x.get_text().strip()
                for x in raw_directions.find_all(dirTok)]
 
@@ -561,5 +562,6 @@ def loadURL(URL):
 # table_path = root + "python/tables/"
 # units_lookup = pd.read_csv(table_path + "units_lookup.csv")
 # matchUnit(ingName,units_lookup)
-URL = "https://www.camelliabrand.com/recipes/instant-pot-new-orleans-style-red-beans-and-rice/"
-loadURL(URL)
+# URL = "https://www.camelliabrand.com/recipes/instant-pot-new-orleans-style-red-beans-and-rice/"
+URL = "https://cooking.nytimes.com/recipes/1019697-slow-cooker-lentil-soup-with-sausage-and-greens"
+ingredients,directions = loadURL(URL)

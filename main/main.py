@@ -27,9 +27,9 @@ warnings.filterwarnings("ignore")
 
 # Platform dependent path
 if _platform == "darwin": # Mac
-    root = "/Users/thomasj.king/Documents/Python_Scripts/shopping_list/"
+    root = "/Users/thomasj.king/Documents/mygit/shopping_list/"
 else: # Windows
-    root = "C:/Users/Thomas/Documents/MATLAB/shopping_list/"
+    root = "C:/Users/Thomas/Documents/GitHub/shopping_list/"
 
 # Table Loads
 table_path = root + "main/tables/"
@@ -70,8 +70,10 @@ active_recipes = recipe_list.iloc[active_ix]
 
 for index,recipe in active_recipes.iterrows():
     print("Adding " + recipe.Name + "...") if verbose else ...
+    # load ingredients
     ingredients = utils.loadAndFilterRecipe(recipe,recipe_path,name_tables,
                                             conv_tables,verbose,dbug)
+    # iterate through ingredients
     for index,ingredient in ingredients.iterrows():
         # do comparison with existing list, then add to cart appropriately
         shopping_cart.addToCart(ingredient)
