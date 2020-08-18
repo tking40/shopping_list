@@ -517,7 +517,7 @@ def loadURL(URL):
         raw_directions = soup.find("div", {"class": "wprm-recipe-instruction-group"})
         ingTok = 'li'
         dirTok = 'li'
-    if "food.com" in URL:
+    elif "food.com" in URL:
         raw_directions = soup.find("div", {"class": "recipe-layout__directions"})
         raw_ingredients = soup.find("div", {"class": "recipe-layout__ingredients"})
         ingTok = 'li'
