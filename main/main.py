@@ -68,6 +68,9 @@ active_ix = np.flatnonzero(recipe_list.Select) # get active recipes
 # active_recipes = recipe_list.iloc[active_ix.flatten()] # this is needed for np.argwhere
 active_recipes = recipe_list.iloc[active_ix]
 
+if active_recipes.empty:
+    print("No active recipes found")
+
 for index,recipe in active_recipes.iterrows():
     print("Adding " + recipe.Name + "...") if verbose else ...
     # load ingredients
@@ -79,6 +82,9 @@ for index,recipe in active_recipes.iterrows():
         shopping_cart.addToCart(ingredient)
 
 #%% Add new recipes from URLs
+
+if url_list.empty:
+    print("No recipe URLs given")
 for index,recipe in url_list.iterrows():
     print("Adding " + recipe.Name + "...") if verbose else ...
     ingredients = utils.loadAndFilterRecipe(recipe,recipe_path,name_tables,
@@ -86,6 +92,9 @@ for index,recipe in url_list.iterrows():
     for index,ingredient in ingredients.iterrows():
         # do comparison with existing list, then add to cart appropriately
         shopping_cart.addToCart(ingredient)
+
+if url_list.empty and active_recipes.empty:
+    print("No recipes given/selected. Exiting...")
 
 #%% Print out list
 shopping_cart.sortAndPrint()
