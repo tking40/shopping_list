@@ -523,10 +523,16 @@ def loadURL(URL):
         ingTok = 'li'
         dirTok = 'li'
     elif "bonappetit" in URL:
-        raw_ingredients = soup.find("div", {"class": "ingredientsGroup"})
-        raw_directions = soup.find("div", {"class": "steps-wrapper"})
-        ingTok = 'li'
-        dirTok = 'li'
+        raw_ingredients = soup.find("div", {"data-testid": "IngredientList"})
+        raw_directions = soup.find("div", {"data-testid": "InstructionsWrapper"})
+
+        quantities = [x.get_text().strip() for x in raw_ingredients.find_all('p')][1:]
+        ing_names = [x.get_text().strip() for x in raw_ingredients.find_all('div')][1:]
+        ingredients = [' '.join(d) for d in set(zip(quantities,ing_names))]
+        
+        directions = [x.get_text().strip() for x in raw_directions.find_all('div')][1:]
+        
+        return ingredients, directions
     elif "allrecipes" in URL or "marthastewart" in URL:
         raw_ingredients = soup.find("fieldset", {"class": "ingredients-section__fieldset"})
         raw_directions = soup.find("fieldset", {"class": "instructions-section__fieldset"})
