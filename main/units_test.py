@@ -1,5 +1,5 @@
 import unittest
-from unit import (
+from units import (
     CountUnit,
     VolumeUnit,
     MassUnit,
@@ -114,6 +114,27 @@ class TestQuantity(unittest.TestCase):
         # different unit and amount
         q6 = Quantity(VolumeUnit.TABLESPOON, 2)
         self.assertFalse(q1 == q6)
+
+    def test_quantity_sub_same_unit(self):
+        q1 = Quantity(VolumeUnit.CUP, 3)
+        q2 = Quantity(VolumeUnit.CUP, 1)
+        result = q1 - q2
+        self.assertEqual(result.amount, 2)
+        self.assertEqual(result.unit, VolumeUnit.CUP)
+
+    def test_quantity_sub_different_unit(self):
+        q1 = Quantity(VolumeUnit.CUP, 1)
+        q2 = Quantity(VolumeUnit.TABLESPOON, 2)
+        # 2 tbsp = 0.125 cup, so 1 - 0.125 = 0.875
+        result = q1 - q2
+        self.assertAlmostEqual(result.amount, 0.875)
+        self.assertEqual(result.unit, VolumeUnit.CUP)
+
+    def test_quantity_sub_error(self):
+        q1 = Quantity(VolumeUnit.CUP, 1)
+        q2 = Quantity(MassUnit.POUND, 1)
+        with self.assertRaises(ValueError):
+            _ = q1 - q2
 
 
 if __name__ == "__main__":

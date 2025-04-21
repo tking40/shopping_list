@@ -132,6 +132,20 @@ class Quantity:
 
         return Quantity(self.unit, self.amount + converted_other.amount)
 
+    def __sub__(self, other: "Quantity") -> "Quantity":
+        """
+        Subtract one quantity from another. Result will have the same unit as the first quantity.
+        """
+        if type(self.unit) != type(other.unit):
+            raise ValueError(
+                f"Cannot subtract {type(other.unit).__name__} from {type(self.unit).__name__}"
+            )
+        converted_other = other
+        if self.unit != other.unit:
+            converted_other = self.convert(other, self)
+
+        return Quantity(self.unit, self.amount - converted_other.amount)
+
     def __eq__(self, other: "Quantity") -> bool:
         """Check explicit equality between two quantities (same unit and amount)"""
         if type(self.unit) != type(other.unit):
