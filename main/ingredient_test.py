@@ -45,5 +45,20 @@ class TestIngredient(unittest.TestCase):
         self.assertEqual(s["amount"], 1)
 
 
+class TestIngredientFromArgs(unittest.TestCase):
+    def test_from_args_valid(self):
+        ing = Ingredient.from_args("carrot", "cup", 2)
+        self.assertEqual(ing.name, "carrot")
+        self.assertEqual(str(ing.quantity), "2 cup")
+
+        ing2 = Ingredient.from_args("egg", "item", 3)
+        self.assertEqual(ing2.name, "egg")
+        self.assertEqual(str(ing2.quantity), "3 item")
+
+    def test_from_args_invalid_unit(self):
+        with self.assertRaises(ValueError):
+            Ingredient.from_args("carrot", "banana", 2)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -28,6 +28,7 @@ class MassUnit(Enum):
     KILOGRAM = 4
 
 
+# TODO: Add LITER to the volume table
 VOLUME_TABLE = [
     [1, 16, 48, 8],
     [1 / 16, 1, 3, 1 / 2],
@@ -157,6 +158,26 @@ class Quantity:
 
     def __str__(self) -> str:
         return f"{self.amount} {self.unit.name.lower()}"
+
+    def to_dict(self) -> dict:
+        return {"unit": self.unit.name.lower(), "amount": self.amount}
+
+    @staticmethod
+    def from_args(unit_str: str, amount: float) -> "Quantity":
+        # Try to match the unit string to one of the Enums
+        for enum_cls in (VolumeUnit, MassUnit, CountUnit):
+            try:
+                unit = enum_cls[unit_str.upper()]
+                return Quantity(unit, amount)
+            except KeyError:
+                continue
+        raise ValueError(f"Unknown unit: {unit_str}")
+
+    @staticmethod
+    def from_dict(d: dict) -> "Quantity":
+        unit_str = d["unit"].upper()
+        amount = d["amount"]
+        return Quantity.from_args(unit_str, amount)
 
 
 if __name__ == "__main__":

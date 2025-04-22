@@ -137,5 +137,45 @@ class TestQuantity(unittest.TestCase):
             _ = q1 - q2
 
 
+class TestQuantityFromDict(unittest.TestCase):
+    def test_from_dict_volume(self):
+        d = {"unit": "cup", "amount": 2.5}
+        q = Quantity.from_dict(d)
+        self.assertEqual(q.unit, VolumeUnit.CUP)
+        self.assertEqual(q.amount, 2.5)
+
+    def test_from_dict_mass(self):
+        d = {"unit": "pound", "amount": 1}
+        q = Quantity.from_dict(d)
+        self.assertEqual(q.unit, MassUnit.POUND)
+        self.assertEqual(q.amount, 1)
+
+    def test_from_dict_count(self):
+        d = {"unit": "item", "amount": 7}
+        q = Quantity.from_dict(d)
+        self.assertEqual(q.unit, CountUnit.ITEM)
+        self.assertEqual(q.amount, 7)
+
+    def test_from_dict_invalid_unit(self):
+        d = {"unit": "banana", "amount": 3}
+        with self.assertRaises(ValueError):
+            Quantity.from_dict(d)
+
+
+class TestQuantityFromArgs(unittest.TestCase):
+    def test_from_args_valid(self):
+        q = Quantity.from_args("cup", 2.5)
+        self.assertEqual(q.unit, VolumeUnit.CUP)
+        self.assertEqual(q.amount, 2.5)
+
+        q2 = Quantity.from_args("item", 7)
+        self.assertEqual(q2.unit.name.lower(), "item")
+        self.assertEqual(q2.amount, 7)
+
+    def test_from_args_invalid_unit(self):
+        with self.assertRaises(ValueError):
+            Quantity.from_args("banana", 3)
+
+
 if __name__ == "__main__":
     unittest.main()

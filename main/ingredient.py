@@ -33,6 +33,11 @@ class Ingredient:
         quantity = Quantity.from_dict(d["quantity"])
         return Ingredient(name=d["name"], quantity=quantity)
 
+    @staticmethod
+    def from_args(name: str, units: str, amount: float) -> "Ingredient":
+        quantity = Quantity.from_args(units, amount)
+        return Ingredient(name=name, quantity=quantity)
+
     def to_series(self) -> pd.Series:
         """Convert the ingredient to a pandas Series."""
         return pd.Series(self.to_dict(flatten=True))
@@ -40,7 +45,7 @@ class Ingredient:
 
 if __name__ == "__main__":
     i1 = Ingredient("broth", Quantity(VolumeUnit.CUP, 1))
-    i2 = Ingredient("broth", Quantity(VolumeUnit.TABLESPOON, 2))
+    i2 = Ingredient.from_args("broth", "tablespoon", 1)
     print(i1 + i2)
     print(i1.to_dict(True))
     print(i1.to_series())
