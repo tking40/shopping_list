@@ -179,6 +179,10 @@ class Quantity:
         amount = d["amount"]
         return Quantity.from_args(unit_str, amount)
 
+    def copy(self) -> "Quantity":
+        """Return a copy of the quantity."""
+        return Quantity(self.unit, self.amount)
+
 
 if __name__ == "__main__":
     unit_1 = Quantity(VolumeUnit.CUP, 1)

@@ -42,6 +42,10 @@ class Ingredient:
         """Convert the ingredient to a pandas Series."""
         return pd.Series(self.to_dict(flatten=True))
 
+    def copy(self) -> "Ingredient":
+        """Return a copy of the ingredient."""
+        return Ingredient(self.name, self.quantity.copy())
+
 
 if __name__ == "__main__":
     i1 = Ingredient("broth", Quantity(VolumeUnit.CUP, 1))

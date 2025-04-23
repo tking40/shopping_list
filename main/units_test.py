@@ -136,6 +136,15 @@ class TestQuantity(unittest.TestCase):
         with self.assertRaises(ValueError):
             _ = q1 - q2
 
+    def test_copy(self):
+        q1 = Quantity(VolumeUnit.CUP, 1)
+        q_copy = q1.copy()
+        self.assertEqual(q_copy, q1)
+        self.assertIsNot(q_copy, q1)
+        # Changing the copy's amount should not affect the original
+        q_copy.amount += 5
+        self.assertNotEqual(q_copy.amount, q1.amount)
+
 
 class TestQuantityFromDict(unittest.TestCase):
     def test_from_dict_volume(self):

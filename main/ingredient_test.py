@@ -44,6 +44,14 @@ class TestIngredient(unittest.TestCase):
         self.assertEqual(s["unit"], "cup")
         self.assertEqual(s["amount"], 1)
 
+    def test_copy(self):
+        ing_copy = self.ingredient1.copy()
+        self.assertEqual(ing_copy, self.ingredient1)
+        self.assertIsNot(ing_copy, self.ingredient1)
+        # Changing the copy's quantity should not affect the original
+        ing_copy.quantity.amount += 5
+        self.assertNotEqual(ing_copy.quantity.amount, self.ingredient1.quantity.amount)
+
 
 class TestIngredientFromArgs(unittest.TestCase):
     def test_from_args_valid(self):
