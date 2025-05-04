@@ -33,6 +33,7 @@ Example response for "100g of flour":
 
 If the units are not specified, use "unit": "item"
 If the amount is not specified, use "amount": 1.0
+For the names, correct any obvious typos or misspellings.
 """
 
 
