@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import litellm
 import json
 import re
+import argparse
 from dataclasses import dataclass
 from typing import List
 
@@ -76,7 +77,7 @@ ex_recipe = """
 
 1.  In a large pot or Dutch oven, bring the water, quinoa and a generous pinch each of salt and pepper to a boil over high. Cover, reduce heat to low and simmer for 13 minutes.
 2.  While the quinoa cooks, drain and rinse the beans, then transfer to a small bowl. Finely grate the garlic over the beans, then add the oil and a pinch each of salt and pepper, and stir to combine. Set aside. Remove and discard any tough stems from the greens, then roughly chop the leaves.
-3.  After 13 minutes, arrange the greens on top of the quinoa and season well with salt and pepper. Cover and cook until the quinoa is tender, 5 to 7 minutes. (When the quinoa is tender, it’s also translucent and has a thin white tail.) Remove the pot from heat, scrape the beans over the greens, then cover the pot and let sit for 5 minutes.
+3.  After 13 minutes, arrange the greens on top of the quinoa and season well with salt and pepper. Cover and cook until the quinoa is tender, 5 to 7 minutes. (When the quinoa is tender, it's also translucent and has a thin white tail.) Remove the pot from heat, scrape the beans over the greens, then cover the pot and let sit for 5 minutes.
 4.  Finely grate some of the lemon zest over the beans and greens, then cut the lemon into wedges. Eat the beans, greens and grains with a squeeze of lemon juice, salt and pepper to taste and any toppings you like.
 """
 
@@ -201,15 +202,13 @@ def parse_ingredients(response_content):
 
 
 def main():
-    # content = parse_recipe("https://www.delish.com/cooking/recipe-ideas/a46066/slow-cooker-garlic-parm-chicken-recipe/")
-    # content = ex_output
-    content = parse_recipe(
-        "https://www.seriouseats.com/fassoulia-armenian-braised-green-beans-5498678"
-    )
+    parser = argparse.ArgumentParser(description='Parse recipe ingredients from a URL')
+    parser.add_argument('url', help='URL of the recipe to parse')
+    args = parser.parse_args()
+    
+    content = parse_recipe(args.url)
 
     ingredients_content = llm_parse_ingredients(content)
-    # print(content)
-
     ingredients = parse_ingredients(ingredients_content)
 
     for ingredient in ingredients:
