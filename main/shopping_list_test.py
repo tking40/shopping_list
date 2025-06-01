@@ -1,7 +1,6 @@
 import unittest
 from shopping_list import ShoppingList
 from ingredient import Ingredient
-from units import Quantity, VolumeUnit, CountUnit
 import pandas as pd
 
 
