@@ -81,6 +81,8 @@ def parse_recipe(URL):
     )
     response_content = response.choices[0].message.content
     log.info(f"\nparse_recipe:\n\n{response_content}")
+    if "cloudflare" in response_content.lower():
+        log.warning("Cloudflare protection detected - may be unable to parse recipe")
     return response_content
 
 
@@ -119,6 +121,8 @@ def parse_ingredients(response_content):
 
     try:
         parsed = json.loads(json_str)
+        if not parsed:
+            raise ValueError(f"No ingredients found! Raw response: {response_content}")
         return [
             ParsedIngredient(
                 amount=float(ingredient["amount"]),
@@ -139,6 +143,7 @@ def main():
 
     logging.basicConfig(level=logging.INFO if args.verbose else logging.WARNING)
     content = parse_recipe(args.url)
+    print(f"\nRecipe Content:\n{content}\n")
 
     ingredients_content = llm_parse_ingredients(content)
     ingredients = parse_ingredients(ingredients_content)
