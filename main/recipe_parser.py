@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # DEFAULT_MODEL = "openai/gpt-4.1-nano-2025-04-14"
-DEFAULT_MODEL = "gemini/gemini-2.0-flash-lite"
+DEFAULT_MODEL = "gemini/gemini-2.5-flash-lite"
 INGREDIENTS_MODEL = "openai/gpt-4.1-2025-04-14"
 
 SYSTEM_PROMPT = """

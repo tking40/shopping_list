@@ -7,7 +7,7 @@ import re
 
 load_dotenv()
 
-DEFAULT_MODEL = "gemini/gemini-2.0-flash-lite"
+DEFAULT_MODEL = "gemini/gemini-2.5-flash-lite"
 
 SYSTEM_PROMPT = """
 "You are a helpful assistant that parses ingredient strings into structured data.
