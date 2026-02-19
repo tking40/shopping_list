@@ -21,7 +21,7 @@ cd shopping_list
 
 2. Install dependencies:
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 3. Set up API keys in `main/.env` for your LLM providers
@@ -31,7 +31,7 @@ pip install -r requirements.txt
 ### Parse a Recipe from URL
 ```bash
 cd main
-python recipe_parser.py "https://example.com/recipe" --verbose
+uv run recipe_parser.py "https://example.com/recipe" --verbose
 ```
 
 Outputs just the extracted ingredients.
@@ -53,7 +53,7 @@ Run all with `./run_tests.sh`
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.12+
 - OpenAI API key (for ingredient parsing)
 - Google Gemini API key (for url parsing)
 
